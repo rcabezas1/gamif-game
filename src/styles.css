@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+
+.option {
+    padding: 5%;
+    position: absolute;
+    display: inline-block;
+    top: 5px;
+    height: 100%;
+}
+
+.optionContainer {
+    position: relative;
+    top: 10px;
+    width: 600px;
+    height: 270px;
+}
+
+.icon {
+    width: 58px;
+}
+
+.answer {
+    cursor: pointer;
+}
+
+.noDisplay {
+    display: none;
+}

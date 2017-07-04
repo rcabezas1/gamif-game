@@ -1,0 +1,14 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{title}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group col-xs-3" *ngFor="let cg of charactersGroup">
+            <a *ngFor="let character of cg.characters" href="javascript:;" [class]="character.class">
+                {{character.nameCh}} - {{character.score}}
+                <img *ngIf="character.badge" [src]="character.badge" [class]="character.animation" />
+                <img [src]="character.img" [class]="character.animation" />
+            </a>
+        </div>
+    </div>
+</div>

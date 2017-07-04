@@ -1,0 +1,110 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{title}}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group col-xs-3" *ngFor="let cg of playerSelect.charactersGroup">
+            <a *ngFor="let character of cg.characters" href="#" [class]="character.class">
+                <label>{{character.nameCh}}</label><br />
+                <img [src]="character.img" class="icon" />
+                <button [style.display]="character.class==='list-group-item'?'':'none'" id="selectOpenModal" (click)="selectCharacter(character)" type="button" class="btn btn-info" data-keyboard="false" data-backdrop="static" data-toggle="modal" data-target="#selectModal">Select</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="selectModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Select</h4>
+            </div>
+            <div class="modal-body">
+                Select Player
+                <div *ngIf="playerSelect.actual">
+                    <img [src]="playerSelect.actual.img" [class]="playerSelect.actual.animation" />
+                    <input type="text" maxlength="15" size="15" [(ngModel)]="playerSelect.actual.nameCh">
+                    <div class="form-group has-success">
+                        <label class="control-label" for="animation">Animation</label>
+                        <select id="animation" class="form-control" [(ngModel)]="playerSelect.actual.animation">
+              <optgroup label="Attention Seekers">
+                <option value="icon animated bounce">bounce</option>
+                <option value="icon animated flash">flash</option>
+                <option value="icon animated pulse">pulse</option>
+                <option value="icon animated rubberBand">rubberBand</option>
+                <option value="icon animated shake">shake</option>
+                <option value="icon animated swing">swing</option>
+                <option value="icon animated tada">tada</option>
+                <option value="icon animated wobble">wobble</option>
+                <option value="icon animated jello">jello</option>
+              </optgroup>
+
+              <optgroup label="Bouncing Entrances">
+                <option value="icon animated bounceIn">bounceIn</option>
+                <option value="icon animated bounceInDown">bounceInDown</option>
+                <option value="icon animated bounceInLeft">bounceInLeft</option>
+                <option value="icon animated bounceInRight">bounceInRight</option>
+                <option value="icon animated bounceInUp">bounceInUp</option>
+              </optgroup>
+
+              <optgroup label="Fading Entrances">
+                <option value="icon animated fadeIn">fadeIn</option>
+                <option value="icon animated fadeInDown">fadeInDown</option>
+                <option value="icon animated fadeInDownBig">fadeInDownBig</option>
+                <option value="icon animated fadeInLeft">fadeInLeft</option>
+                <option value="icon animated fadeInLeftBig">fadeInLeftBig</option>
+                <option value="icon animated fadeInRight">fadeInRight</option>
+                <option value="icon animated fadeInRightBig">fadeInRightBig</option>
+                <option value="icon animated fadeInUp">fadeInUp</option>
+                <option value="icon animated fadeInUpBig">fadeInUpBig</option>
+              </optgroup>
+
+              <optgroup label="Flippers">
+                <option value="icon animated flip">flip</option>
+                <option value="icon animated flipInX">flipInX</option>
+                <option value="icon animated flipInY">flipInY</option>
+              </optgroup>
+
+              <optgroup label="Lightspeed">
+                <option value="icon animated lightSpeedIn">lightSpeedIn</option>
+              </optgroup>
+
+              <optgroup label="Rotating Entrances">
+                <option value="icon animated rotateIn">rotateIn</option>
+                <option value="icon animated rotateInDownLeft">rotateInDownLeft</option>
+                <option value="icon animated rotateInDownRight">rotateInDownRight</option>
+                <option value="icon animated rotateInUpLeft">rotateInUpLeft</option>
+                <option value="icon animated rotateInUpRight">rotateInUpRight</option>
+              </optgroup>
+
+              <optgroup label="Sliding Entrances">
+                <option value="icon animated slideInUp">slideInUp</option>
+                <option value="icon animated slideInDown">slideInDown</option>
+                <option value="icon animated slideInLeft">slideInLeft</option>
+                <option value="icon animated slideInRight">slideInRight</option>
+
+              </optgroup>
+                      
+              <optgroup label="Zoom Entrances">
+                <option value="icon animated zoomIn">zoomIn</option>
+                <option value="icon animated zoomInDown">zoomInDown</option>
+                <option value="icon animated zoomInLeft">zoomInLeft</option>
+                <option value="icon animated zoomInRight">zoomInRight</option>
+                <option value="icon animated zoomInUp">zoomInUp</option>
+              </optgroup>
+              
+              <optgroup label="Specials">
+                <option value="icon animated rollIn">rollIn</option>
+              </optgroup>
+            </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" routerLink="/play" class="btn btn-primary" [style.display]="!playerSelect.actual || playerSelect.actual.class==='list-group-item'?'':'none'" (click)="initPlayer(playerSelect.actual)" data-dismiss="modal">Select</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<button id="openModal" [style.display]="'none'" (click)="openModal()" type="button" class="btn btn-info btn-lg" data-keyboard="false" data-backdrop="static" data-toggle="modal" data-target="#myModal">Open Modal</button>
+<div *ngIf="step" class="modal" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="jumbotron">
+                    <div *ngIf="!challenge">
+                        <h1>{{step.id}}</h1>
+                        <p>{{step.description}}</p>
+                        <p><a id="initChallenge" class="btn btn-primary btn-lg" (click)="initChallenge()">Challenge {{step.test.getType()}}</a>
+                        </p>
+                        <p>{{step.test.getDescription()}}</p>
+                    </div>
+
+                    <div *ngIf="challenge">
+
+                        <h4>{{step.test.getDescription()}}</h4>
+                        <div class="progress">
+                            <div [class]="step.test.getInstance().progressBar" [style.width]="step.test.getInstance().remainingStr"></div>
+                        </div>
+
+                        <div *ngIf="step.test.getType()==='Choose Image'">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <img *ngFor="let option of step.test.getInstance().choices" [src]="option.img" [class]="option.class" />
+                                </div>
+                                <div *ngFor="let answer of step.test.getInstance().answers" [class]="step.test.getInstance().answerClass">
+                                    <img (click)="selectChoice(answer)" [src]="answer.img" [class]="answer.class" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="step.test.getType()==='Select Player'">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a *ngFor="let character of step.test.getInstance().players" href="javascript:;" [class]="character.class">
+                                        <div class="alert alert-info" role="alert">{{character.nameCh}} - {{character.score}}</div>
+                                        <img *ngIf="character.badge" [src]="character.badge" class="img-responsive " />
+                                        <img [src]="character.img" class="img-responsive" />
+                                    </a>
+                                </div>
+                                <div [class]="step.test.getInstance().answerClass" *ngIf="step.test.getInstance().answer">
+                                    <img [src]="step.test.getInstance().answer.img" [class]="step.test.getInstance().answer.class" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <img [src]="step.img" class="icon" [style.background]="step.fill">
+                <img [src]="character.img" class="icon">
+                <button type="button" id="closeNoMore" class="btn btn-default noDisplay" data-dismiss="modal">Close No More</button>
+                <button type="button" id="closeChallenge" class="btn btn-default noDisplay" data-dismiss="modal" (click)="closeStep()">Close Step</button>
+                <button type="button" id="sendChoice" class="btn btn-default " data-dismiss="modal" (click)="sendChoice()">Close</button>
+                <button type="button" id="closeSelect" class="btn btn-default noDisplay" (click)="closeSelect()">Close Select</button>
+            </div>
+        </div>
+    </div>
+</div>
