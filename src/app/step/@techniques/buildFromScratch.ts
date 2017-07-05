@@ -13,8 +13,8 @@ export class BuildFromScratch extends Step {
             core.fill);
         let options: string[] = [
             "../assets/img/challenge/11/a.png",
-            "../assets/img/challenge/11/b.png",
-            "../assets/img/challenge/11/c.png",
+            "../assets/img/challenge/9/b.png",
+            "../assets/img/challenge/9/c.png",
             "../assets/img/challenge/badges/all.png"
         ]
         this.test = new Multiple(options, "4.png", 10, "Choose most accurate image option");

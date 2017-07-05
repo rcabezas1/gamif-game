@@ -7,11 +7,12 @@ import * as io from 'socket.io-client';
 
 @Injectable()
 export class ChatService {
-    //private url = 'http://localhost:5000';
-    private url = 'http://cd54ce9b.ngrok.io';
+    private url = 'http://localhost:5000';
+    //private url = 'http://cd54ce9b.ngrok.io';
     private socket;
 
     sendInitMessage(message, obj) {
+        this.initSocket();
         var send = {id:message,object:obj};
         this.socket.emit('init-challenge', send);
     }
@@ -20,20 +21,10 @@ export class ChatService {
         return this.getMessage('init-challenge');
     }
 
-    sendScoreMessage(message: Character) {
-        this.socket.emit('update-score', message);
-    }
-
-
-    getScoreMessages() {
-        return this.getMessage('update-score');
-    }
-
-
     sendNextMessage(message: any) {
+        this.initSocket();
         this.socket.emit('next-player', message);
     }
-
 
     getNextMessages() {
         return this.getMessage('next-player');
@@ -41,10 +32,12 @@ export class ChatService {
 
 
     sendCharacterMessage(message: Character) {
-        this.socket.emit('update-player', message);
+        this.initSocket();
+        this.socket.emit('insert-player', message);
     }
 
     sendGameMessage(message: Game) {
+        this.initSocket();
         this.socket.emit('game', message);
     }
 
@@ -56,12 +49,24 @@ export class ChatService {
         return this.getMessage('insert-player');
     }
 
-    getAllCharacterMessages() {
-        return this.getMessage('all-characters');
+    requestAllPlayer(){
+        this.initSocket();
+        this.socket.emit('all-characters');
     }
 
-    getUpdateCharacterMessages() {
-        return this.getMessage('update-characters');
+    requestPlayers(){
+        this.initSocket();
+        this.socket.emit('all-players');
+    }
+
+    updatePlayers(players){
+        this.initSocket();
+        this.socket.emit('all-players',players);
+    }
+
+    getAllCharacterMessages() {
+        this.initSocket();
+        return this.getMessage('all-characters');
     }
 
     initSocket() {

@@ -1,9 +1,9 @@
-  <div class="progress">
+<div class="progress">
     <div class="progress-bar progress-bar-success" [style.width]="porcentStr"></div>
-  </div>
-  <h1 *ngIf="player">
+</div>
+<h1 *ngIf="player">
     {{player.nameCh}} - {{player.score}}
     <img [src]="player.img" [class]="player.animation">
-  </h1>
-<step [step]="step" [character]="current"></step>
+</h1>
+<step [step]="step" [character]="current" [close]="false"></step>
 <players></players>

@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Technique, CORES, Core } from "./technique";
-import { Character } from "../characters/character";
+import { Character, CharacterGroup } from "../characters/character";
 import { Step } from "../step/step";
 import { BoardService } from "./board.service";
-import { CharacterService } from "../characters/character.service";
+import { CharacterUtil } from "../characters/character.util";
 import { StepFactoryService } from "../step/stepFactory.service";
 import { ChatService } from "../chat/chat.service";
 import { PlayerService } from "../players/players.service";
@@ -13,10 +13,11 @@ import { Game } from "../game/game";
   selector: 'board-detail',
   templateUrl: './board.component.html',
   styleUrls: ['../app.component.css', '../animate.css'],
-  providers: [BoardService, CharacterService, StepFactoryService]
+  providers: [BoardService, StepFactoryService]
 })
 export class BoardComponent implements OnInit {
   characters: Character[];
+  charactersGroup: CharacterGroup[];
   CORES: Core[] = CORES;
   steps: Technique[];
   actual: Character;
@@ -27,7 +28,7 @@ export class BoardComponent implements OnInit {
   private porcent: number;
   private stepPorcent: number;
 
-  constructor(private boardService: BoardService, private characterService: CharacterService, private stepFService: StepFactoryService, private playerService: PlayerService, private chatService: ChatService) {
+  constructor(private boardService: BoardService, private stepFService: StepFactoryService, private playerService: PlayerService, private chatService: ChatService) {
   }
 
   @HostListener('window:resize', ['$event'])
@@ -37,18 +38,23 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.steps = this.boardService.getBoardSteps();
-    
     this.porcent = 0;
     this.stepPorcent = 100 / this.steps.length
     this.porcentStr = this.porcent + '%'
     let fix = 50;
     this.height = (this.boardService.sortBoardSteps(this.steps, window.innerWidth)+fix)+"px";
     this.characters = [];
-    this.chatService.getAllCharacterMessages().subscribe(message => {
-      var obj: any = message;
-      this.characters = obj.ALL_CHARACTERS;
-    });
+    this.charactersGroup = [];
+    this.listenPlayers();
     this.listenChoice();
+  }
+
+  listenPlayers(){
+    this.chatService.getPlayersMessages().subscribe((message: any) => {
+            this.characters = message;
+            this.playerService.setPlayers(this.characters);
+            this.charactersGroup = CharacterUtil.groupCharacters(this.characters, 2);         
+        });
   }
 
    listenChoice(){

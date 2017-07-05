@@ -15,6 +15,7 @@ import { ChatService } from "../chat/chat.service";
 export class StepComponent implements OnInit {
   @Input() step: Step;
   @Input() character: Character;
+  @Input() close:boolean;
   challenge: boolean = false;
 
   constructor(private stepService: StepFactoryService, private playerService: PlayerService, private chatService: ChatService) {
@@ -53,21 +54,9 @@ export class StepComponent implements OnInit {
       }
     }
     this.playerService.nextActive();
-    this.chatService.sendNextMessage(id);
     this.playerService.getActual().change = true;
-    this.updateEffect();
-  }
-
-  updateEffect(){
-    let players:Character[] = this.playerService.getPlayers();
-    for (var index = 0; index < players.length; index++) {
-      var player = players[index];
-      if(player.change){
-        player.change = false;
-        this.chatService.sendScoreMessage(player);
-      }
-      
-    }
+    this.chatService.updatePlayers(this.playerService.getPlayers());
+    this.chatService.sendNextMessage('');
   }
 
   closeSelect() {

@@ -54,7 +54,7 @@
                 <img [src]="character.img" class="icon">
                 <button type="button" id="closeNoMore" class="btn btn-default noDisplay" data-dismiss="modal">Close No More</button>
                 <button type="button" id="closeChallenge" class="btn btn-default noDisplay" data-dismiss="modal" (click)="closeStep()">Close Step</button>
-                <button type="button" id="sendChoice" class="btn btn-default " data-dismiss="modal" (click)="sendChoice()">Close</button>
+                <button *ngIf="close" type="button" id="sendChoice" class="btn btn-default " data-dismiss="modal" (click)="sendChoice()">Close</button>
                 <button type="button" id="closeSelect" class="btn btn-default noDisplay" (click)="closeSelect()">Close Select</button>
             </div>
         </div>

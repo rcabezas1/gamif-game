@@ -1,7 +1,7 @@
 <div class="progress">
-  <div class="progress-bar progress-bar-success" [style.width]="porcentStr"></div>
+    <div class="progress-bar progress-bar-success" [style.width]="porcentStr"></div>
 </div>
-<svg width="100%" [attr.height]="height" id="animationSandbox" >
+<svg width="100%" [attr.height]="height" id="animationSandbox">
   <defs>
     <pattern *ngFor="let character of characters" [id]="character.id" x="0" y="0" height="100%" width="100%">
       <circle cx="30" cy="30" r="30" [attr.fill]="character.fill" stroke="black" />
@@ -15,5 +15,5 @@
   <circle *ngFor="let technique of steps" [id]="technique.id" [attr.cx]="technique.cx" [attr.cy]="technique.cy" [attr.r]="technique.radio"
     [attr.fill]="technique.fillId" stroke="black" [attr.class]="'animated '+technique.class" (click)="click(technique)" />
 </svg>
-<step [step]="step" [character]="current"></step>
+<step [step]="step" [character]="current" [close]="true"></step>
 <players></players>

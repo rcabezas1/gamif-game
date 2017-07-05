@@ -3,7 +3,7 @@
         <h3 class="panel-title">{{title}}</h3>
     </div>
     <div class="panel-body">
-        <div class="list-group col-xs-3" *ngFor="let cg of playerSelect.charactersGroup">
+        <div class="list-group col-md-3" *ngFor="let cg of playerSelect.charactersGroup">
             <a *ngFor="let character of cg.characters" href="#" [class]="character.class">
                 <label>{{character.nameCh}}</label><br />
                 <img [src]="character.img" class="icon" />

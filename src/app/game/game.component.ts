@@ -4,7 +4,7 @@ import { Game } from "./game";
 import { Step } from "../step/step";
 import { StepFactoryService } from "../step/stepFactory.service";
 import { PlayerService } from "../players/players.service";
-import { Character } from "../characters/character";
+import { Character,CharacterGroup } from "../characters/character";
 
 @Component({
   selector: 'game',
@@ -22,11 +22,12 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let characters:Character[];
     this.player = this.playerService.getPlayer();
     this.gameInit();
     this.closeChoice();
     this.getNext();
-    this.getScore();
+    
   }
 
   gameInit() {
@@ -65,23 +66,18 @@ export class GameComponent implements OnInit {
 
   getNext(){
     this.chatService.getNextMessages().subscribe((message)=>{
-      this.playerService.nextActive();
+      let players = this.playerService.getPlayers();
+      if(this.player && players){
+        let ind = players.findIndex(current => current.id == this.player.id);
+        if(ind>=0){
+          this.player = players[ind];
+        }
+      }
       if(document.getElementById("closeNoMore")){
         document.getElementById("closeNoMore").click();
       }
     });
   }
 
-  getScore():void{
-    this.chatService.getScoreMessages().subscribe((message:any)=>{
-      let player:Character = message;
-      let ind = this.playerService.getPlayers().findIndex(elem => elem.id === player.id);
-      if(ind>=0){
-        this.playerService.getPlayers()[ind] = player;
-        if(this.playerService.getPlayer() && this.playerService.getPlayer().id==this.playerService.getPlayers()[ind].id){
-          this.playerService.getPlayer().score = player.score
-        }
-      }
-    });
-  }
+  
 }
